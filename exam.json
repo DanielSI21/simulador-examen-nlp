@@ -104,12 +104,12 @@
                 "correct_option": "Falso",
                 "incorrect_options": ["Verdadero"],
                 "feedback": {
-                  "correct": "Correcto. En este tipo de representación, las categorías léxicas no se ubican así; además tu fuente marcó esta pregunta con una corrección de inconsistencia.",
-                  "incorrect": "Incorrecto. La afirmación es falsa según la lista original corregida."
+                  "correct": "Correcto. En una tabla de análisis sintáctico, la superdiagonal se usa para combinar constituyentes adyacentes; las categorías léxicas de cada palabra se ubican en celdas base, no en la superdiagonal.",
+                  "incorrect": "Incorrecto. La superdiagonal no almacena directamente las categorías gramaticales de cada palabra; esas etiquetas se colocan primero en las celdas correspondientes a las unidades léxicas y luego se combinan para formar constituyentes mayores."
                 },
                 "topic": "Sintaxis",
                 "difficulty": "alta",
-                "notes": "Se conservó la corrección indicada en la fuente original."
+                "notes": "La explicación se ajustó para reflejar mejor el funcionamiento general de las tablas de análisis sintáctico."
               },
               {
                 "id": 46,
@@ -359,7 +359,7 @@
                 "incorrect_options": ["Descendente", "De anchura"],
                 "feedback": {
                   "correct": "Correcto. La estrategia ascendente favorece la integración de información sintáctica y semántica.",
-                  "incorrect": "Incorrecto. La estrategia mencionada en la fuente es la ascendente."
+                  "incorrect": "Incorrecto. El análisis ascendente parte de las palabras y va construyendo constituyentes mayores, lo que facilita incorporar información semántica conforme se reconocen estructuras válidas."
                 },
                 "topic": "Sintaxis",
                 "difficulty": "alta"
@@ -389,7 +389,7 @@
                 "incorrect_options": ["Meronimia", "Polisemia"],
                 "feedback": {
                   "correct": "Correcto. La metonimia usa una palabra en un sentido relacionado con el original.",
-                  "incorrect": "Incorrecto. La definición corresponde a metonimia."
+                  "incorrect": "Incorrecto. La definición describe la metonimia: se nombra algo mediante otro término con el que guarda una relación cercana, como causa-efecto, continente-contenido o autor-obra."
                 },
                 "topic": "Semántica y relaciones léxicas",
                 "difficulty": "media"
