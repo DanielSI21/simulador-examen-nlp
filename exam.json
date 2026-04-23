@@ -205,11 +205,11 @@
               {
                 "id": 5,
                 "text": "El ______ determina si una cadena de caracteres conforma una palabra correcta.",
-                "correct_option": "Reconocimiento léxico",
-                "incorrect_options": ["Reconocimiento sintáctico", "Reconocimiento morfológico"],
+                "correct_option": "Reconocimiento morfológico",
+                "incorrect_options": ["Reconocimiento sintáctico", "Reconocimiento léxico"],
                 "feedback": {
-                  "correct": "Correcto. El reconocimiento léxico valida si la secuencia corresponde a una palabra aceptable.",
-                  "incorrect": "Incorrecto. La tarea descrita corresponde al nivel léxico."
+                  "correct": "Correcto. El reconocimiento morfológico determina si una cadena de caracteres constituye una palabra correcta. Para ello se conecta el lexicón con una máquina de estados finitos que modela las reglas morfotácticas y valida el recorrido desde un estado inicial hasta uno final.",
+                  "incorrect": "Incorrecto. La validación de si una cadena forma una palabra correcta corresponde al reconocimiento morfológico. El reconocimiento sintáctico analiza relaciones entre palabras en una oración, y el reconocimiento léxico alude al inventario de entradas, no a la validación morfotáctica de una palabra."
                 },
                 "topic": "Morfología y léxico",
                 "difficulty": "media"
