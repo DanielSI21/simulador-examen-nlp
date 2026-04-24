@@ -116,13 +116,13 @@
                             {
                                 "id": 16,
                                 "text": "La superdiagonal de la matriz de análisis sintáctico contiene las categorías gramaticales para cada una de las palabras de la oración.",
-                                "correct_option": "Falso",
+                                "correct_option": "Verdadero",
                                 "incorrect_options": [
-                                    "Verdadero"
+                                    "Falso"
                                 ],
                                 "feedback": {
-                                    "correct": "Correcto. En una tabla de análisis sintáctico, la superdiagonal se usa para combinar constituyentes adyacentes; las categorías léxicas de cada palabra se ubican en celdas base, no en la superdiagonal.",
-                                    "incorrect": "Incorrecto. La superdiagonal no almacena directamente las categorías gramaticales de cada palabra; esas etiquetas se colocan primero en las celdas correspondientes a las unidades léxicas y luego se combinan para formar constituyentes mayores."
+                                    "correct": "Correcto. La superdiagonal en la matriz contiene las categorías gramaticales para cada una de las palabras de la oración; las diagonales superiores representan constituyentes sintácticos de tramos cada vez mayores.",
+                                    "incorrect": "Incorrecto. Según el material de la materia, la superdiagonal sí contiene las categorías gramaticales de cada palabra, y las diagonales por encima de ella contienen los constituyentes sintácticos."
                                 },
                                 "topic": "Sintaxis",
                                 "difficulty": "alta",
