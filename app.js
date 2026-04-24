@@ -220,6 +220,7 @@
       id: String(readFirstDefined(question, ["id"], context.index + 1)),
       section: readFirstDefined(question, ["section", "section_title", "sectionTitle"], context.sectionTitle),
       topic: readFirstDefined(question, ["topic", "topic_title", "topicTitle"], context.topicTitle),
+      questionStatus: readFirstDefined(question, ["question_status", "questionStatus"], ""),
       text: String(text).trim(),
       options: options,
       correctOption: correctOption,
@@ -300,6 +301,7 @@
         id: question.id,
         section: question.section,
         topic: question.topic,
+        questionStatus: question.questionStatus,
         text: question.text,
         options: question.options.slice(),
         correctOption: question.correctOption,
@@ -687,6 +689,9 @@
   function buildQuestionCard(question, questionIndex) {
     var card = document.createElement("article");
     var answer = state.answers[question.id];
+    var questionStatusBadge = question.questionStatus
+      ? "<span class=\"inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold " + buildQuestionOriginClass(question.questionStatus) + "\">" + escapeHtml(question.questionStatus) + "</span>"
+      : "";
 
     card.className = "rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6";
     card.innerHTML = [
@@ -697,6 +702,7 @@
       "        <span class=\"inline-flex items-center rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700\">Pregunta " + escapeHtml(String(questionIndex + 1)) + "</span>",
       "        <span class=\"inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700\">" + escapeHtml(question.section) + "</span>",
       "        <span class=\"inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700\">" + escapeHtml(question.topic) + "</span>",
+      "        " + questionStatusBadge,
       "      </div>",
       "      <p class=\"text-base font-semibold leading-7 text-slate-900 sm:text-lg\">" + escapeHtml(question.text) + "</p>",
       "    </div>",
@@ -784,6 +790,14 @@
     }
 
     return answer.isCorrect ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700";
+  }
+
+  function buildQuestionOriginClass(questionStatus) {
+    if (normalizeText(questionStatus) === normalizeText("Pregunta adicional")) {
+      return "bg-amber-100 text-amber-800";
+    }
+
+    return "bg-sky-100 text-sky-800";
   }
 
   function buildQuestionStatusText(answer) {
