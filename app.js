@@ -61,17 +61,12 @@
   }
 
   async function loadExamSource() {
-    // En servidor local usamos el JSON real; al abrir por file:// caemos al respaldo embebido.
     var remoteData = await tryFetchExamJson();
     if (remoteData) {
       return remoteData;
     }
 
-    if (window.EXAM_DATA) {
-      return window.EXAM_DATA;
-    }
-
-    throw new Error("No se encontró una fuente válida de preguntas. Verifica que exista exam.json o data.js.");
+    throw new Error("No se pudo cargar exam.json. Verifica que el archivo exista y que el sitio se abra desde un servidor local.");
   }
 
   async function tryFetchExamJson() {
@@ -92,7 +87,7 @@
     var normalizedQuestions = normalizeQuestions(examRoot);
 
     if (!normalizedQuestions.length) {
-      throw new Error("No se encontraron preguntas válidas en el archivo del examen.");
+      throw new Error("No se encontraron preguntas vÃ¡lidas en el archivo del examen.");
     }
 
     state.examTitle = readFirstDefined(examRoot, ["title", "name"], "Simulador de examen");
@@ -144,7 +139,7 @@
 
     var normalized = [];
     sections.forEach(function (section, sectionIndex) {
-      var sectionTitle = readFirstDefined(section, ["title", "name", "label"], "Sección " + (sectionIndex + 1));
+      var sectionTitle = readFirstDefined(section, ["title", "name", "label"], "SecciÃ³n " + (sectionIndex + 1));
       var topics = readFirstDefined(section, ["topics", "items"], []);
 
       if (Array.isArray(topics) && topics.length) {
@@ -214,7 +209,7 @@
     var feedbackCorrect = readFirstDefined(question, ["feedback_correct", "feedbackCorrect"], null) ||
       readFirstDefined(feedback, ["correct", "positive"], "Respuesta correcta. Buen trabajo.");
     var feedbackIncorrect = readFirstDefined(question, ["feedback_incorrect", "feedbackIncorrect"], null) ||
-      readFirstDefined(feedback, ["incorrect", "negative"], "Respuesta incorrecta. Revisa la explicación y sigue practicando.");
+      readFirstDefined(feedback, ["incorrect", "negative"], "Respuesta incorrecta. Revisa la explicaciÃ³n y sigue practicando.");
 
     return {
       id: String(readFirstDefined(question, ["id"], context.index + 1)),
@@ -458,14 +453,14 @@
 
   function buildSummaryMessage(percent) {
     if (percent >= 85) {
-      return "Muy buen resultado. Mantén el ritmo y repasa la guía para consolidar los temas más importantes.";
+      return "Muy buen resultado. MantÃ©n el ritmo y repasa la guÃ­a para consolidar los temas mÃ¡s importantes.";
     }
 
     if (percent >= 65) {
-      return "Vas bien. Hay una base sólida, pero todavía conviene reforzar algunos conceptos con la guía de estudio.";
+      return "Vas bien. Hay una base sÃ³lida, pero todavÃ­a conviene reforzar algunos conceptos con la guÃ­a de estudio.";
     }
 
-    return "Hay espacio claro para mejorar. Revisa con calma la guía de estudio y vuelve a intentar el examen.";
+    return "Hay espacio claro para mejorar. Revisa con calma la guÃ­a de estudio y vuelve a intentar el examen.";
   }
 
   function selectAnswer(question, option) {
@@ -495,7 +490,7 @@
       return;
     }
 
-    // La guía agrupa las preguntas por sección y tema para repaso rápido fuera del simulador.
+    // La guÃ­a agrupa las preguntas por secciÃ³n y tema para repaso rÃ¡pido fuera del simulador.
     var lines = [];
     lines.push(state.examTitle);
     lines.push("Guia de estudio");
