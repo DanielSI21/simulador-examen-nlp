@@ -9,7 +9,8 @@
     settings: {},
     questions: [],
     answers: {},
-    completed: false
+    completed: false,
+    introDismissed: false
   };
 
   var elements = {};
@@ -48,6 +49,9 @@
     elements.downloadGuideBtn = document.getElementById("download-guide-btn");
     elements.footerNote = document.getElementById("footer-note");
     elements.restartBtn = document.getElementById("restart-btn");
+    elements.introModal = document.getElementById("intro-modal");
+    elements.introCloseBtn = document.getElementById("intro-close-btn");
+    elements.introStartBtn = document.getElementById("intro-start-btn");
     elements.summaryMessage = document.getElementById("summary-message");
     elements.summaryScore = document.getElementById("summary-score");
     elements.summaryCorrect = document.getElementById("summary-correct");
@@ -58,6 +62,18 @@
   function bindEvents() {
     elements.restartBtn.addEventListener("click", restartExam);
     elements.downloadGuideBtn.addEventListener("click", downloadStudyGuide);
+    elements.introCloseBtn.addEventListener("click", dismissIntroModal);
+    elements.introStartBtn.addEventListener("click", dismissIntroModal);
+    elements.introModal.addEventListener("click", function (event) {
+      if (event.target === elements.introModal) {
+        dismissIntroModal();
+      }
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && !elements.introModal.classList.contains("hidden")) {
+        dismissIntroModal();
+      }
+    });
   }
 
   async function loadExamSource() {
@@ -66,7 +82,12 @@
       return remoteData;
     }
 
-    throw new Error("No se pudo cargar exam.json. Verifica que el archivo exista y que el sitio se abra desde un servidor local.");
+    var embeddedData = getEmbeddedExamData();
+    if (embeddedData) {
+      return embeddedData;
+    }
+
+    throw new Error("No se pudo cargar exam.json ni el respaldo local data.js. Verifica que ambos archivos existan junto a index.html.");
   }
 
   async function tryFetchExamJson() {
@@ -80,6 +101,14 @@
     } catch (error) {
       return null;
     }
+  }
+
+  function getEmbeddedExamData() {
+    if (window.EXAM_DATA && typeof window.EXAM_DATA === "object") {
+      return window.EXAM_DATA;
+    }
+
+    return null;
   }
 
   function hydrateState(source) {
@@ -96,6 +125,7 @@
     state.questions = applyOrdering(normalizedQuestions, state.settings, state.examTitle + "::" + state.examVersion);
 
     restoreSavedState();
+    state.introDismissed = getAnsweredCount() > 0 || state.completed;
   }
 
   function getExamRoot(source) {
@@ -390,6 +420,7 @@
     renderStatusBanner();
     renderQuestionsList();
     renderSummary();
+    renderIntroModal();
   }
 
   function renderStats() {
@@ -481,8 +512,36 @@
   function restartExam() {
     state.answers = {};
     state.completed = false;
+    state.introDismissed = false;
     localStorage.removeItem(STORAGE_KEY);
     render();
+  }
+
+  function renderIntroModal() {
+    if (!state.questions.length || state.introDismissed) {
+      hideIntroModal();
+      return;
+    }
+
+    showIntroModal();
+  }
+
+  function showIntroModal() {
+    elements.introModal.classList.remove("hidden");
+    elements.introModal.classList.add("flex");
+    document.body.classList.add("overflow-hidden");
+    elements.introStartBtn.focus();
+  }
+
+  function hideIntroModal() {
+    elements.introModal.classList.add("hidden");
+    elements.introModal.classList.remove("flex");
+    document.body.classList.remove("overflow-hidden");
+  }
+
+  function dismissIntroModal() {
+    state.introDismissed = true;
+    hideIntroModal();
   }
 
   function downloadStudyGuide() {
